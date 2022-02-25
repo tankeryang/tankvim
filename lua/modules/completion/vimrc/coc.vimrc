@@ -15,13 +15,16 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 
+let g:coc_config_home = '~/.config/nvim/lua/modules/completion'
 let g:coc_snippet_next = '<tab>'
 let g:coc_global_extensions = [
     \ 'coc-marketplace',
     \ 'coc-snippets',
     \ 'coc-tsserver',
     \ 'coc-sh',
-    \ 'coc-python',
+    \ 'coc-highlight',
+    \ 'coc-vimlsp',
+    \ 'coc-pyright',
     \ 'coc-lua',
     \ 'coc-go',
     \ 'coc-json',
