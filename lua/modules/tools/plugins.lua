@@ -25,6 +25,7 @@ tools["skywind3000/vim-terminal-help"] = {
 -- 终端工具
 tools["akinsho/toggleterm.nvim"] = {
     opt = true,
+    branch = "main",
     event = "BufRead",
     config = conf.toggleterm,
 }

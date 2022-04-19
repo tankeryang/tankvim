@@ -14,6 +14,10 @@ ui["catppuccin/nvim"] = {
     as = "catppuccin",
     config = conf.catppuccin,
 }
+-- https://github.com/folke/tokyonight.nvim
+ui["folke/tokyonight.nvim"] = { opt = false, config = conf.tokyonight }
+-- https://github.com/Everblush/everblush.vim
+ui["mangeshrex/everblush.vim"] = { opt = false, config = conf.everblush }
 
 -- 底部状态栏
 -- https://github.com/nvim-lualine/lualine.nvim
@@ -28,6 +32,7 @@ ui["arkav/lualine-lsp-progress"] = { opt = false, after = "nvim-gps" }
 -- https://github.com/akinsho/bufferline.nvim
 ui["akinsho/nvim-bufferline.lua"] = {
     opt = true,
+    branch = "main",
     event = "BufRead",
     config = conf.nvim_bufferline,
 }

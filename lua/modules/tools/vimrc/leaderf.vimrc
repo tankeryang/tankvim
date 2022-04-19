@@ -25,3 +25,7 @@ let g:Lf_NormalMap = {
 nnoremap FF :LeaderfFunction!<cr>
 vnoremap FF <c-c>:LeaderfFunction!<cr><ESC>
 inoremap FF <c-o>:LeaderfFunction!<cr><ESC>
+
+nnoremap FG :Leaderf rg<cr>
+vnoremap FG <c-c>:Leaderf rg<cr><ESC>
+inoremap FG <c-o>:Leaderf rg<cr><ESC>

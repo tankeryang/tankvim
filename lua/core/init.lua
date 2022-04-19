@@ -69,6 +69,7 @@ local load_core = function ()
 
     pack.load_compile()
 
+    -- [edge, kanagawa, catppuccin, tokyonight, everblush]
     vim.cmd([[colorscheme kanagawa]])
 end
 
