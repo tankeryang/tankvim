@@ -245,7 +245,7 @@ end
 function config.nvim_bufferline()
     require("bufferline").setup({
         options = {
-            numbers = "buffer_id",
+            numbers = "ordinal",
             buffer_close_icon = "",
             close_icon = "",
             modified_icon = "✥",
