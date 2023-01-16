@@ -7,7 +7,7 @@ ui["kyazdani42/nvim-web-devicons"] = { opt = false }
 -- https://github.com/sainnhe/edge
 ui["sainnhe/edge"] = { opt = false, config = conf.edge }
 -- https://github.com/rebelot/kanagawa.nvim
-ui["rebelot/kanagawa.nvim"] = { opt = false, config = conf.kanagawa }
+-- ui["rebelot/kanagawa.nvim"] = { opt = false, config = conf.kanagawa }
 -- https://github.com/catppuccin/nvim
 ui["catppuccin/nvim"] = {
     opt = false,
