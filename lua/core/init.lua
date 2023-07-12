@@ -70,7 +70,7 @@ local load_core = function ()
     pack.load_compile()
 
     -- [edge, kanagawa, catppuccin, tokyonight, everblush]
-    vim.cmd([[colorscheme kanagawa]])
+    vim.cmd([[colorscheme edge]])
 end
 
 load_core()
