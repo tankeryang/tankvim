@@ -14,146 +14,128 @@ end
 
 local function load_options()
     local global_local = {
-        shell = "/bin/zsh",
-        termguicolors = true,
-        mouse = "a",
-        errorbells = true,
-        visualbell = true,
-        hidden = true,
-        fileformats = "unix,mac,dos",
-        magic = true,
-        virtualedit = "block",
-        -- 语法高亮
-        encoding = "utf-8",
-        fileencoding = "utf-8",
-        viewoptions = "folds,cursor,curdir,slash,unix",
-        sessionoptions = "curdir,help,tabpages,winsize",
-        clipboard = "unnamedplus",
-        -- 搜索忽略文件
-        wildignorecase = true,
-        wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
-        backup = false,
-        writebackup = false,
-        swapfile = false,
-        undodir = global.cache_dir .. "undo/",
-        -- directory = global.cache_dir .. "swap/",
         -- backupdir = global.cache_dir .. "backup/",
-        -- viewdir = global.cache_dir .. "view/",
+        -- directory = global.cache_dir .. "swap/",
+        -- pumblend = 10,
         -- spellfile = global.cache_dir .. "spell/en.uft-8.add",
-        history = 2000,
-        shada = "!,'300,<50,@100,s10,h",
+        -- viewdir = global.cache_dir .. "view/",
+        -- winblend = 10,
+        autoindent = true,
+        autoread = true,
+        autowrite = true,
+        backspace = "indent,eol,start",
+        backup = false,
         backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
-        smarttab = true,
-        shiftround = true,
-        timeout = true,
-        ttimeout = true,
-        timeoutlen = 500,
-        ttimeoutlen = 0,
-        updatetime = 100,
-        redrawtime = 1500,
-        ignorecase = true,
-        smartcase = true,
-        infercase = true,
-        incsearch = true,
-        hlsearch = true,
-        wrapscan = true,
+        breakat = [[\ \    ;:,!?]],
+        breakindentopt = "shift:2,min:20",
+        clipboard = "unnamedplus",
+        cmdheight = 1, -- 0, 1, 2
+        cmdwinheight = 5,
         complete = ".,w,b,k",
-        inccommand = "nosplit",
+        completeopt = "menuone,noselect",
+        concealcursor = "niv",
+        conceallevel = 0,
+        cursorcolumn = true,
+        cursorline = true,
+        diffopt = "filler,iwhite,internal,linematch:60,algorithm:patience",
+        display = "lastline",
+        encoding = "utf-8",
+        equalalways = false,
+        errorbells = true,
+        expandtab = true,
+        fileformats = "unix,mac,dos",
+        foldenable = true,
+        foldlevelstart = 99,
+        formatoptions = "1jcroql",
         grepformat = "%f:%l:%c:%m",
         grepprg = "rg --hidden --vimgrep --smart-case --",
-        breakat = [[\ \    ;:,!?]],
-        startofline = false,
-        whichwrap = "h,l,<,>,[,],~",
-        splitbelow = true,
-        splitright = true,
-        switchbuf = "useopen",
-        backspace = "indent,eol,start",
-        diffopt = "filler,iwhite,internal,algorithm:patience",
-        completeopt = "menuone,noselect",
-        jumpoptions = "stack",
-        showmode = false,
-        shortmess = "aoOTIcF",
-        scrolloff = 2,
-        sidescrolloff = 5,
-        foldlevelstart = 99,
-        -- 显示标尺
-        ruler = true,
-        -- 开启光亮光标行
-        cursorline = true,
-        -- 开启高亮光标列
-        cursorcolumn = true,
-        -- 显示空格和tab
-        list = true,
-        listchars = "tab:>-·,nbsp:+,trail:·,extends:→,precedes:←",
-        -- 总是显示标签栏
-        showtabline = 2,
-        winwidth = 30,
-        winminwidth = 10,
-        pumheight = 15,
         helpheight = 12,
-        previewheight = 12,
-        showcmd = true,
-        cmdheight = 2,
-        cmdwinheight = 5,
-        equalalways = false,
+        hidden = true,
+        history = 2000,
+        ignorecase = true,
+        inccommand = "nosplit",
+        incsearch = true,
+        infercase = true,
+        jumpoptions = "stack",
         laststatus = 2,
-        display = "lastline",
-        showbreak = "↳  ",
-        pumblend = 10,
-        winblend = 10,
-        autoread = true,
-        -- 自动保存文件
-        autowrite = true,
-        autowriteall = true,
-        -- 命令行模式自动补全
-        wildmenu = true,
-        -- 开启文件类型侦测
-        lazyredraw = true,
-    }
-
-    local bw_local = {
-        undofile = true,
-        synmaxcol = 2500,
-        formatoptions = "1jcroql",
-        textwidth = 80,
-        -- 自动对齐
-        autoindent = true,
-        smartindent = true,
-        -- tab
-        expandtab = true,
-        tabstop = 4,
-        shiftwidth = 4,
-        softtabstop = 4,
-        breakindentopt = "shift:2,min:20",
-        wrap = false,
         linebreak = true,
-        -- 显示行号
+        list = true,
+        listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
+        magic = true,
+        mousescroll = "ver:3,hor:6",
         number = true,
-        -- 显示相对行号
+        previewheight = 12,
+        pumheight = 15,
+        redrawtime = 1500,
         relativenumber = true,
-        -- 代码折叠
-        foldenable = true,
-        foldmethod = "syntax",
+        ruler = true,
+        scrolloff = 2,
+        sessionoptions = "buffers,curdir,folds,help,tabpages,winpos,winsize",
+        shada = "!,'500,<50,@100,s10,h",
+        shiftround = true,
+        shiftwidth = 4,
+        shortmess = "aoOTIcF",
+        showbreak = "↳  ",
+        showcmd = false,
+        showmode = false,
+        showtabline = 2,
+        sidescrolloff = 5,
         signcolumn = "yes",
-        conceallevel = 0,
-        concealcursor = "niv",
+        smartcase = true,
+        smarttab = true,
+        softtabstop = 4,
+        splitbelow = true,
+        splitkeep = "screen",
+        splitright = true,
+        startofline = false,
+        swapfile = false,
+        switchbuf = "usetab,uselast",
+        synmaxcol = 2500,
+        tabstop = 4,
+        termguicolors = true,
+        timeout = true,
+        timeoutlen = 300,
+        ttimeout = true,
+        ttimeoutlen = 0,
+        undodir = global.cache_dir .. "undo/",
+        undofile = true,
+        -- Please do NOT set `updatetime` to above 500, otherwise most plugins may not function correctly
+        updatetime = 200,
+        viewoptions = "folds,cursor,curdir,slash,unix",
+        virtualedit = "block",
+        visualbell = true,
+        whichwrap = "h,l,<,>,[,],~",
+        wildignore = ".git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**",
+        wildignorecase = true,
+        winminwidth = 10,
+        winwidth = 30,
+        wrap = false,
+        wrapscan = true,
+        writebackup = false,
     }
-
-    if global.is_mac then
-        vim.g.clipboard = {
-            name = "macOS-clipboard",
-            copy = { ["+"] = "pbcopy", ["*"] = "pbcopy" },
-            paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
-            cache_enabled = 0,
-        }
-        -- vim.g.python_host_prog = "/usr/bin/python"
+    local function isempty(s)
+        return s == nil or s == ""
     end
+
+    -- custom python provider
+    local conda_prefix = os.getenv("CONDA_PREFIX")
+    if not isempty(conda_prefix) then
+        -- vim.g.python_host_prog = conda_prefix .. "/bin/python"
+        vim.g.python3_host_prog = conda_prefix .. "/bin/python"
+    else
+        -- vim.g.python_host_prog = "/usr/bin/python"
+        vim.g.python3_host_prog = "/usr/bin/python3"
+    end
+
     for name, value in pairs(global_local) do
         vim.o[name] = value
     end
-    -- vim.g.python3_host_prog = "/home/yang/Applications/miniconda3/envs/nvimpy38/bin/python"
-    vim.g.python3_host_prog = "/usr/bin/python3"
-    bind_option(bw_local)
+
+    -- Fix sqlite3 missing-lib issue on Windows
+    if global.is_windows then
+        -- Download the DLLs form https://www.sqlite.org/download.html
+        vim.g.sqlite_clib_path = global.home .. "/Documents/sqlite-dll-win64-x64-3400200/sqlite3.dll"
+    end
 end
 
 load_options()

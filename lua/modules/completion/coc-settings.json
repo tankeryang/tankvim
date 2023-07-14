@@ -1,5 +1,0 @@
-{
-    "python.analysis.diagnosticMode": "workspace",
-    "python.analysis.autoImportCompletions": true,
-    "python.analysis.autoSearchPaths": false
-}
