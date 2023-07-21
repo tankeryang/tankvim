@@ -1,3 +1,3 @@
 return function()
-	require("codeium").setup({})
+    require("codeium").setup({})
 end
