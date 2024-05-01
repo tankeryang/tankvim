@@ -4,9 +4,6 @@ return function()
 		type = require("modules.utils.icons").get("type"),
 		cmp = require("modules.utils.icons").get("cmp"),
 	}
-	local t = function(str)
-		return vim.api.nvim_replace_termcodes(str, true, true, true)
-	end
 
 	local border = function(hl)
 		return {
@@ -32,25 +29,11 @@ return function()
 		return (diff < 0)
 	end
 
-	local cmp = require("cmp")
-	cmp.setup({
-		preselect = cmp.PreselectMode.Item,
-		window = {
-			completion = {
-				border = border("PmenuBorder"),
-				winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,Search:PmenuSel",
-				scrollbar = false,
-			},
-			documentation = {
-				border = border("CmpDocBorder"),
-				winhighlight = "Normal:CmpDoc",
-			},
-		},
-		sorting = {
-			priority_weight = 2,
-			comparators = {
-				-- require("copilot_cmp.comparators").prioritize,
-				-- require("copilot_cmp.comparators").score,
+	local use_copilot = require("core.settings").use_copilot
+	local comparators = use_copilot == true
+			and {
+				require("copilot_cmp.comparators").prioritize,
+				require("copilot_cmp.comparators").score,
 				-- require("cmp_tabnine.compare"),
 				compare.offset, -- Items closer to cursor will have lower priority
 				compare.exact,
@@ -64,7 +47,40 @@ return function()
 				compare.kind,
 				compare.length,
 				compare.order,
+			}
+		or {
+			-- require("cmp_tabnine.compare"),
+			compare.offset, -- Items closer to cursor will have lower priority
+			compare.exact,
+			-- compare.scopes,
+			compare.lsp_scores,
+			compare.sort_text,
+			compare.score,
+			compare.recently_used,
+			-- compare.locality, -- Items closer to cursor will have higher priority, conflicts with `offset`
+			require("cmp-under-comparator").under,
+			compare.kind,
+			compare.length,
+			compare.order,
+		}
+
+	local cmp = require("cmp")
+	require("modules.utils").load_plugin("cmp", {
+		preselect = cmp.PreselectMode.None,
+		window = {
+			completion = {
+				border = border("PmenuBorder"),
+				winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,Search:PmenuSel",
+				scrollbar = false,
 			},
+			documentation = {
+				border = border("CmpDocBorder"),
+				winhighlight = "Normal:CmpDoc",
+			},
+		},
+		sorting = {
+			priority_weight = 2,
+			comparators = comparators,
 		},
 		formatting = {
 			fields = { "abbr", "kind", "menu" },
@@ -79,11 +95,12 @@ return function()
 					copilot = "[CPLT]",
 					buffer = "[BUF]",
 					orgmode = "[ORG]",
-					nvim_lsp = "[NVIM_LSP]",
+					nvim_lsp = "[LSP]",
 					nvim_lua = "[LUA]",
 					path = "[PATH]",
 					tmux = "[TMUX]",
 					treesitter = "[TS]",
+					latex_symbols = "[LTEX]",
 					luasnip = "[SNIP]",
 					spell = "[SPELL]",
 				}, {
@@ -110,7 +127,7 @@ return function()
 		},
 		-- You can set mappings if you want
 		mapping = cmp.mapping.preset.insert({
-			["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+			["<CR>"] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace }),
 			["<C-p>"] = cmp.mapping.select_prev_item(),
 			["<C-n>"] = cmp.mapping.select_next_item(),
 			["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -120,7 +137,7 @@ return function()
 				if cmp.visible() then
 					cmp.select_next_item()
 				elseif require("luasnip").expand_or_locally_jumpable() then
-					vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"))
+					require("luasnip").expand_or_jump()
 				else
 					fallback()
 				end
@@ -129,7 +146,7 @@ return function()
 				if cmp.visible() then
 					cmp.select_prev_item()
 				elseif require("luasnip").jumpable(-1) then
-					vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+					require("luasnip").jump(-1)
 				else
 					fallback()
 				end
@@ -150,7 +167,14 @@ return function()
 			{ name = "spell" },
 			{ name = "tmux" },
 			{ name = "orgmode" },
-			{ name = "buffer" },
+			{
+				name = "buffer",
+				option = {
+					get_bufnrs = function()
+						return vim.api.nvim_list_bufs()
+					end,
+				},
+			},
 			{ name = "latex_symbols" },
 			{ name = "copilot" },
 			-- { name = "codeium" },

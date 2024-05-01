@@ -1,120 +1,131 @@
 local editor = {}
 
-editor["rainbowhxch/accelerated-jk.nvim"] = {
-    lazy = true,
-    event = "VeryLazy",
-    config = require("editor.accelerated-jk"),
-}
 editor["olimorris/persisted.nvim"] = {
-    lazy = true,
-    cmd = {
-        "SessionToggle",
-        "SessionStart",
-        "SessionStop",
-        "SessionSave",
-        "SessionLoad",
-        "SessionLoadLast",
-        "SessionLoadFromFile",
-        "SessionDelete",
-    },
-    config = require("editor.persisted"),
+	lazy = true,
+	cmd = {
+		"SessionToggle",
+		"SessionStart",
+		"SessionStop",
+		"SessionSave",
+		"SessionLoad",
+		"SessionLoadLast",
+		"SessionLoadFromFile",
+		"SessionDelete",
+	},
+	config = require("editor.persisted"),
 }
 editor["m4xshen/autoclose.nvim"] = {
-    lazy = true,
-    event = "InsertEnter",
-    config = require("editor.autoclose"),
-}
-editor["max397574/better-escape.nvim"] = {
-    lazy = true,
-    event = { "CursorHold", "CursorHoldI" },
-    config = require("editor.better-escape"),
+	lazy = true,
+	event = "InsertEnter",
+	config = require("editor.autoclose"),
 }
 editor["LunarVim/bigfile.nvim"] = {
-    lazy = false,
-    config = require("editor.bigfile"),
-    cond = require("core.settings").load_big_files_faster,
+	lazy = false,
+	config = require("editor.bigfile"),
+	cond = require("core.settings").load_big_files_faster,
 }
 editor["ojroques/nvim-bufdel"] = {
-    lazy = true,
-    event = "BufReadPost",
+	lazy = true,
+	cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
 }
-editor["rhysd/clever-f.vim"] = {
-    lazy = true,
-    event = { "BufReadPost", "BufAdd", "BufNewFile" },
-    config = require("editor.cleverf"),
+-- NOTE: `flash.nvim` is a powerful plugin that can be used as partial or complete replacements for:
+--  > `hop.nvim`,
+--  > `wilder.nvim`
+--  > `nvim-treehopper`
+-- Considering its steep learning curve as well as backward compatibility issues...
+--  > We have no plan to remove the above plugins for the time being.
+-- But as usual, you can always tweak the plugin to your liking.
+editor["folke/flash.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.flash"),
 }
 editor["numToStr/Comment.nvim"] = {
-    lazy = true,
-    event = { "CursorHold", "CursorHoldI" },
-    config = require("editor.comment"),
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.comment"),
 }
 editor["sindrets/diffview.nvim"] = {
-    lazy = true,
-    cmd = { "DiffviewOpen", "DiffviewClose" },
+	lazy = true,
+	cmd = { "DiffviewOpen", "DiffviewClose" },
+	config = require("editor.diffview"),
 }
-editor["junegunn/vim-easy-align"] = {
-    lazy = true,
-    cmd = "EasyAlign",
+editor["echasnovski/mini.align"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.align"),
 }
 editor["smoka7/hop.nvim"] = {
-    lazy = true,
-    version = "*",
-    event = { "CursorHold", "CursorHoldI" },
-    config = require("editor.hop"),
+	lazy = true,
+	version = "*",
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.hop"),
 }
-editor["RRethy/vim-illuminate"] = {
-    lazy = true,
-    event = { "CursorHold", "CursorHoldI" },
-    config = require("editor.vim-illuminate"),
+editor["tzachar/local-highlight.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.local-highlight"),
 }
 editor["romainl/vim-cool"] = {
-    lazy = true,
-    event = { "CursorMoved", "InsertEnter" },
+	lazy = true,
+	event = { "CursorMoved", "InsertEnter" },
 }
 editor["lambdalisue/suda.vim"] = {
-    lazy = true,
-    cmd = { "SudaRead", "SudaWrite" },
-    config = require("editor.suda"),
+	lazy = true,
+	cmd = { "SudaRead", "SudaWrite" },
+	init = require("editor.suda"),
+}
+editor["tpope/vim-sleuth"] = {
+	lazy = true,
+	event = { "BufNewFile", "BufReadPost", "BufFilePost" },
+}
+editor["nvim-pack/nvim-spectre"] = {
+	lazy = true,
+	cmd = "Spectre",
+}
+editor["mrjones2014/smart-splits.nvim"] = {
+	lazy = true,
+	event = { "CursorHoldI", "CursorHold" },
+	config = require("editor.splits"),
 }
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --
 ----------------------------------------------------------------------
 editor["nvim-treesitter/nvim-treesitter"] = {
-    lazy = true,
-    build = function()
-        if #vim.api.nvim_list_uis() ~= 0 then
-            vim.api.nvim_command("TSUpdate")
-        end
-    end,
-    event = "BufReadPre",
-    config = require("editor.treesitter"),
-    dependencies = {
-        { "nvim-treesitter/nvim-treesitter-textobjects" },
-        { "JoosepAlviste/nvim-ts-context-commentstring" },
-        { "mfussenegger/nvim-treehopper" },
-        { "andymass/vim-matchup" },
-        {
-            "hiphish/rainbow-delimiters.nvim",
-            config = require("editor.rainbow_delims"),
-        },
-        {
-            "nvim-treesitter/nvim-treesitter-context",
-            config = require("editor.ts-context"),
-        },
-        {
-            "windwp/nvim-ts-autotag",
-            config = require("editor.autotag"),
-        },
-        {
-            "NvChad/nvim-colorizer.lua",
-            config = require("editor.colorizer"),
-        },
-        {
-            "abecodes/tabout.nvim",
-            config = require("editor.tabout"),
-        },
-    },
+	lazy = true,
+	build = function()
+		if #vim.api.nvim_list_uis() ~= 0 then
+			vim.api.nvim_command([[TSUpdate]])
+		end
+	end,
+	event = "BufReadPre",
+	config = require("editor.treesitter"),
+	dependencies = {
+		{ "andymass/vim-matchup" },
+		{ "mfussenegger/nvim-treehopper" },
+		{ "nvim-treesitter/nvim-treesitter-textobjects" },
+		{
+			"windwp/nvim-ts-autotag",
+			config = require("editor.autotag"),
+		},
+		{
+			"NvChad/nvim-colorizer.lua",
+			config = require("editor.colorizer"),
+		},
+		{
+			"hiphish/rainbow-delimiters.nvim",
+			config = require("editor.rainbow_delims"),
+		},
+		{
+			"nvim-treesitter/nvim-treesitter-context",
+			config = require("editor.ts-context"),
+		},
+		{
+			"JoosepAlviste/nvim-ts-context-commentstring",
+			config = require("editor.ts-context-commentstring"),
+		},
+	},
 }
 
 return editor

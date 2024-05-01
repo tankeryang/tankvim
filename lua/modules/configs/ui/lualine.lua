@@ -1,4 +1,5 @@
 return function()
+	local has_catppuccin = vim.g.colors_name:find("catppuccin") ~= nil
 	local colors = require("modules.utils").get_palette()
 	local icons = {
 		diagnostics = require("modules.utils.icons").get("diagnostics", true),
@@ -13,57 +14,45 @@ return function()
 			group = vim.api.nvim_create_augroup("LualineColorScheme", { clear = true }),
 			pattern = "*",
 			callback = function()
+				has_catppuccin = vim.g.colors_name:find("catppuccin") ~= nil
 				require("lualine").setup({ options = { theme = custom_theme() } })
 			end,
 		})
 
-		colors = require("modules.utils").get_palette()
-		local universal_bg = require("core.settings").transparent_background and "NONE" or colors.mantle
-		return {
-			normal = {
-				a = { fg = colors.lavender, bg = colors.surface0, gui = "bold" },
-				b = { fg = colors.text, bg = universal_bg },
-				c = { fg = colors.text, bg = universal_bg },
-			},
-			command = {
-				a = { fg = colors.peach, bg = colors.surface0, gui = "bold" },
-			},
-			insert = {
-				a = { fg = colors.green, bg = colors.surface0, gui = "bold" },
-			},
-			visual = {
-				a = { fg = colors.flamingo, bg = colors.surface0, gui = "bold" },
-			},
-			terminal = {
-				a = { fg = colors.teal, bg = colors.surface0, gui = "bold" },
-			},
-			replace = {
-				a = { fg = colors.red, bg = colors.surface0, gui = "bold" },
-			},
-			inactive = {
-				a = { fg = colors.subtext0, bg = universal_bg, gui = "bold" },
-				b = { fg = colors.subtext0, bg = universal_bg },
-				c = { fg = colors.subtext0, bg = universal_bg },
-			},
-		}
+		if has_catppuccin then
+			colors = require("modules.utils").get_palette()
+			local universal_bg = require("core.settings").transparent_background and "NONE" or colors.mantle
+			return {
+				normal = {
+					a = { fg = colors.lavender, bg = colors.surface0, gui = "bold" },
+					b = { fg = colors.text, bg = universal_bg },
+					c = { fg = colors.text, bg = universal_bg },
+				},
+				command = {
+					a = { fg = colors.peach, bg = colors.surface0, gui = "bold" },
+				},
+				insert = {
+					a = { fg = colors.green, bg = colors.surface0, gui = "bold" },
+				},
+				visual = {
+					a = { fg = colors.flamingo, bg = colors.surface0, gui = "bold" },
+				},
+				terminal = {
+					a = { fg = colors.teal, bg = colors.surface0, gui = "bold" },
+				},
+				replace = {
+					a = { fg = colors.red, bg = colors.surface0, gui = "bold" },
+				},
+				inactive = {
+					a = { fg = colors.subtext0, bg = universal_bg, gui = "bold" },
+					b = { fg = colors.subtext0, bg = universal_bg },
+					c = { fg = colors.subtext0, bg = universal_bg },
+				},
+			}
+		else
+			return "auto"
+		end
 	end
-
-	local mini_sections = {
-		lualine_a = { "filetype" },
-		lualine_b = {},
-		lualine_c = {},
-		lualine_x = {},
-		lualine_y = {},
-		lualine_z = {},
-	}
-	local outline = {
-		sections = mini_sections,
-		filetypes = { "lspsagaoutline" },
-	}
-	local diffview = {
-		sections = mini_sections,
-		filetypes = { "DiffviewFiles" },
-	}
 
 	local conditionals = {
 		has_enough_room = function()
@@ -104,18 +93,23 @@ return function()
 		---@param special_nobg boolean @Disable guibg for transparent backgrounds?
 		---@param bg string? @Background hl group
 		---@param gui string? @GUI highlight arguments
-		---@return fun():lualine_hlgrp
+		---@return nil|fun():lualine_hlgrp
 		gen_hl = function(fg, gen_bg, special_nobg, bg, gui)
-			return function()
-				local guifg = colors[fg]
-				local guibg = gen_bg and require("modules.utils").hl_to_rgb("StatusLine", true, colors.mantle)
-					or colors[bg]
-				local nobg = special_nobg and require("core.settings").transparent_background
-				return {
-					fg = guifg and guifg or colors.none,
-					bg = (guibg and not nobg) and guibg or colors.none,
-					gui = gui and gui or nil,
-				}
+			if has_catppuccin then
+				return function()
+					local guifg = colors[fg]
+					local guibg = gen_bg and require("modules.utils").hl_to_rgb("StatusLine", true, colors.mantle)
+						or colors[bg]
+					local nobg = special_nobg and require("core.settings").transparent_background
+					return {
+						fg = guifg and guifg or colors.none,
+						bg = (guibg and not nobg) and guibg or colors.none,
+						gui = gui and gui or nil,
+					}
+				end
+			else
+				-- Return `nil` if the theme is user-defined
+				return nil
 			end
 		end,
 	}
@@ -138,6 +132,7 @@ return function()
 			end,
 			padding = 0,
 			color = utils.gen_hl("surface1", true, true),
+			separator = { left = "", right = "" },
 		},
 
 		file_status = {
@@ -168,7 +163,7 @@ return function()
 
 		lsp = {
 			function()
-				local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+				local buf_ft = vim.api.nvim_get_option_value("filetype", { scope = "local" })
 				local clients = vim.lsp.get_active_clients()
 				local lsp_lists = {}
 				local available_servers = {}
@@ -206,14 +201,14 @@ return function()
 					return venv
 				end
 
-				if vim.api.nvim_buf_get_option(0, "filetype") == "python" then
+				if vim.api.nvim_get_option_value("filetype", { scope = "local" }) == "python" then
 					local venv = os.getenv("CONDA_DEFAULT_ENV")
 					if venv then
-						return string.format("%s", env_cleanup(venv))
+						return icons.misc.PyEnv .. env_cleanup(venv)
 					end
 					venv = os.getenv("VIRTUAL_ENV")
 					if venv then
-						return string.format("%s", env_cleanup(venv))
+						return icons.misc.PyEnv .. env_cleanup(venv)
 					end
 				end
 				return ""
@@ -224,7 +219,7 @@ return function()
 
 		tabwidth = {
 			function()
-				return icons.ui.Tab .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+				return icons.ui.Tab .. vim.api.nvim_get_option_value("tabstop", { scope = "local" })
 			end,
 			padding = 1,
 		},
@@ -254,7 +249,7 @@ return function()
 		},
 	}
 
-	require("lualine").setup({
+	require("modules.utils").load_plugin("lualine", {
 		options = {
 			icons_enabled = true,
 			theme = custom_theme(),
@@ -347,14 +342,6 @@ return function()
 			lualine_z = {},
 		},
 		tabline = {},
-		extensions = {
-			"quickfix",
-			"nvim-tree",
-			"nvim-dap-ui",
-			"toggleterm",
-			"fugitive",
-			outline,
-			diffview,
-		},
+		extensions = {},
 	})
 end
