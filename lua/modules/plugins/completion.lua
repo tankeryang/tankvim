@@ -26,6 +26,9 @@ completion["stevearc/aerial.nvim"] = {
 	event = "LspAttach",
 	config = require("completion.aerial"),
 }
+
+-- @github: https://github.com/DNLHC/glance.nvim
+-- @desc: A pretty window for previewing, navigating and editing your LSP locations in one place, inspired by vscode's peek preview
 completion["dnlhc/glance.nvim"] = {
 	lazy = true,
 	event = "LspAttach",
