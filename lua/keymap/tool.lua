@@ -15,6 +15,8 @@ local plug_map = {
 	["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
 	["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
 	["n|<leader>nr"] = map_cr("NvimTreeRefresh"):with_noremap():with_silent():with_desc("filetree: Refresh"),
+	["n|<leader>>"] = map_cr("NvimTreeResize +5"):with_noremap():with_silent():with_desc("filetree: Resize +5"),
+	["n|<leader><"] = map_cr("NvimTreeResize -5"):with_noremap():with_silent():with_desc("filetree: Resize -5"),
 
 	-- Plugin: sniprun
 	["v|<leader>r"] = map_cr("SnipRun"):with_noremap():with_silent():with_desc("tool: Run code by range"),
