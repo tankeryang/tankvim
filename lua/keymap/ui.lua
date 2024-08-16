@@ -1,27 +1,26 @@
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
-local map_cu = bind.map_cu
+-- local map_cu = bind.map_cu
 -- local map_cmd = bind.map_cmd
 -- local map_callback = bind.map_callback
 
 local plug_map = {
-	-- Plugin: bufferline
-	["n|<leader>j"] = map_cr("BufferLineCycleNext"):with_noremap():with_silent():with_desc("buffer: Switch to next"),
-	["n|<leader>k"] = map_cr("BufferLineCyclePrev"):with_noremap():with_silent():with_desc("buffer: Switch to prev"),
-	["n|<A-S-j>"] = map_cr("BufferLineMoveNext"):with_noremap():with_silent():with_desc("buffer: Move current to next"),
-	["n|<A-S-k>"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent():with_desc("buffer: Move current to prev"),
+	-- Plugin: bufferline.nvim
+	["n|<A-i>"] = map_cr("BufferLineCycleNext"):with_noremap():with_silent():with_desc("buffer: Switch to next"),
+	["n|<A-o>"] = map_cr("BufferLineCyclePrev"):with_noremap():with_silent():with_desc("buffer: Switch to prev"),
+	["n|<A-S-i>"] = map_cr("BufferLineMoveNext"):with_noremap():with_silent():with_desc("buffer: Move current to next"),
+	["n|<A-S-o>"] = map_cr("BufferLineMovePrev"):with_noremap():with_silent():with_desc("buffer: Move current to prev"),
 	["n|<leader>be"] = map_cr("BufferLineSortByExtension"):with_noremap():with_desc("buffer: Sort by extension"),
-	["n|<leader>bd"] = map_cr("BufferLineSortByDirectory"):with_noremap():with_desc("buffer: Sort by direrctory"),
-	["n|<leader>1"] = map_cr("BufferLineGoToBuffer 1"):with_noremap():with_silent():with_desc("buffer: Goto buffer 1"),
-	["n|<leader>2"] = map_cr("BufferLineGoToBuffer 2"):with_noremap():with_silent():with_desc("buffer: Goto buffer 2"),
-	["n|<leader>3"] = map_cr("BufferLineGoToBuffer 3"):with_noremap():with_silent():with_desc("buffer: Goto buffer 3"),
-	["n|<leader>4"] = map_cr("BufferLineGoToBuffer 4"):with_noremap():with_silent():with_desc("buffer: Goto buffer 4"),
-	["n|<leader>5"] = map_cr("BufferLineGoToBuffer 5"):with_noremap():with_silent():with_desc("buffer: Goto buffer 5"),
-	["n|<leader>6"] = map_cr("BufferLineGoToBuffer 6"):with_noremap():with_silent():with_desc("buffer: Goto buffer 6"),
-	["n|<leader>7"] = map_cr("BufferLineGoToBuffer 7"):with_noremap():with_silent():with_desc("buffer: Goto buffer 7"),
-	["n|<leader>8"] = map_cr("BufferLineGoToBuffer 8"):with_noremap():with_silent():with_desc("buffer: Goto buffer 8"),
-	["n|<leader>9"] = map_cr("BufferLineGoToBuffer 9"):with_noremap():with_silent():with_desc("buffer: Goto buffer 9"),
-	["n|<leader>q"] = map_cu("bp<CR>:bd #"):with_noremap():with_silent(),
+	["n|<leader>bd"] = map_cr("BufferLineSortByDirectory"):with_noremap():with_desc("buffer: Sort by directory"),
+	["n|<A-1>"] = map_cr("BufferLineGoToBuffer 1"):with_noremap():with_silent():with_desc("buffer: Goto buffer 1"),
+	["n|<A-2>"] = map_cr("BufferLineGoToBuffer 2"):with_noremap():with_silent():with_desc("buffer: Goto buffer 2"),
+	["n|<A-3>"] = map_cr("BufferLineGoToBuffer 3"):with_noremap():with_silent():with_desc("buffer: Goto buffer 3"),
+	["n|<A-4>"] = map_cr("BufferLineGoToBuffer 4"):with_noremap():with_silent():with_desc("buffer: Goto buffer 4"),
+	["n|<A-5>"] = map_cr("BufferLineGoToBuffer 5"):with_noremap():with_silent():with_desc("buffer: Goto buffer 5"),
+	["n|<A-6>"] = map_cr("BufferLineGoToBuffer 6"):with_noremap():with_silent():with_desc("buffer: Goto buffer 6"),
+	["n|<A-7>"] = map_cr("BufferLineGoToBuffer 7"):with_noremap():with_silent():with_desc("buffer: Goto buffer 7"),
+	["n|<A-8>"] = map_cr("BufferLineGoToBuffer 8"):with_noremap():with_silent():with_desc("buffer: Goto buffer 8"),
+	["n|<A-9>"] = map_cr("BufferLineGoToBuffer 9"):with_noremap():with_silent():with_desc("buffer: Goto buffer 9"),
 }
 
 bind.nvim_load_mapping(plug_map)
@@ -55,42 +54,42 @@ function mapping.gitsigns(buf)
 			:with_buffer(buf)
 			:with_expr()
 			:with_desc("git: Goto prev hunk"),
-		["n|<leader>hs"] = bind.map_callback(function()
+		["n|<leader>gs"] = bind.map_callback(function()
 			actions.stage_hunk()
 		end)
 			:with_buffer(buf)
 			:with_desc("git: Stage hunk"),
-		["v|<leader>hs"] = bind.map_callback(function()
+		["v|<leader>gs"] = bind.map_callback(function()
 			actions.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 		end)
 			:with_buffer(buf)
 			:with_desc("git: Stage hunk"),
-		["n|<leader>hu"] = bind.map_callback(function()
+		["n|<leader>gu"] = bind.map_callback(function()
 			actions.undo_stage_hunk()
 		end)
 			:with_buffer(buf)
 			:with_desc("git: Undo stage hunk"),
-		["n|<leader>hr"] = bind.map_callback(function()
+		["n|<leader>gr"] = bind.map_callback(function()
 			actions.reset_hunk()
 		end)
 			:with_buffer(buf)
 			:with_desc("git: Reset hunk"),
-		["v|<leader>hr"] = bind.map_callback(function()
+		["v|<leader>gr"] = bind.map_callback(function()
 			actions.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 		end)
 			:with_buffer(buf)
 			:with_desc("git: Reset hunk"),
-		["n|<leader>hR"] = bind.map_callback(function()
+		["n|<leader>gR"] = bind.map_callback(function()
 			actions.reset_buffer()
 		end)
 			:with_buffer(buf)
 			:with_desc("git: Reset buffer"),
-		["n|<leader>hp"] = bind.map_callback(function()
+		["n|<leader>gp"] = bind.map_callback(function()
 			actions.preview_hunk()
 		end)
 			:with_buffer(buf)
 			:with_desc("git: Preview hunk"),
-		["n|<leader>hb"] = bind.map_callback(function()
+		["n|<leader>gb"] = bind.map_callback(function()
 			actions.blame_line({ full = true })
 		end)
 			:with_buffer(buf)
