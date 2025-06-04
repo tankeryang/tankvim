@@ -2,11 +2,11 @@ local settings = {}
 
 -- Set it to false if you want to use https to update plugins and treesitter parsers.
 ---@type boolean
-settings["use_ssh"] = false
+settings["use_ssh"] = true
 
 -- Set it to false if you don't use copilot
 ---@type boolean
-settings["use_copilot"] = false
+settings["use_copilot"] = true
 
 -- Set it to false if there is no need to format on save.
 ---@type boolean
@@ -46,19 +46,18 @@ settings["formatter_block_list"] = {
 -- Servers in this list will skip setting formatting capabilities if rhs is true.
 ---@type table<string, boolean>
 settings["server_formatting_block_list"] = {
-	lua_ls = true,
-	tsserver = true,
 	clangd = true,
+	lua_ls = true,
+	ts_ls = true,
 }
 
 -- Set it to false if you want to turn off LSP Inlay Hints
 ---@type boolean
 settings["lsp_inlayhints"] = true
 
--- Set it to false if diagnostics virtual text is annoying.
--- If disabled, you may browse lsp diagnostics using trouble.nvim (press `gt` to toggle it).
+-- Set it to false if diagnostics virtual lines is annoying.
 ---@type boolean
-settings["diagnostics_virtual_text"] = true
+settings["diagnostics_virtual_lines"] = false
 
 -- Set it to one of the values below if you want to change the visible severity level of lsp diagnostics.
 -- Priority: `Error` > `Warning` > `Information` > `Hint`.
@@ -221,5 +220,11 @@ settings["dashboard_image"] = {
 	[[⠿⠛⠛⠛⠛⠛⠛⠻⢿⣿⣿⣿⣿⣯⣟⠷⢷⣿⡿⠋⠀⠀⠀⠀⣵⡀⢠⡿⠋⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]],
 	[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠛⢿⣿⣿⠂⠀⠀⠀⠀⠀⢀⣽⣿⣿⣿⣿⣿⣿⣿⣍⠛⠿⣿⣿⣿⣿⣿⣿]],
 }
+
+-- Set the search backend to use here.
+-- telescope is enough for most cases.
+-- fzf is more powerful for searching in huge repo but needs fzf binary installed.
+---@type "telescope"|"fzf"
+settings["search_backend"] = "telescope"
 
 return require("modules.utils").extend_config(settings, "user.settings")

@@ -18,7 +18,7 @@ local function load_options()
 		cmdheight = 1, -- 0, 1, 2
 		cmdwinheight = 5,
 		complete = ".,w,b,k,kspell",
-		completeopt = "menuone,noselect,popup",
+		completeopt = "fuzzy,menuone,noselect,popup",
 		concealcursor = "niv",
 		conceallevel = 0,
 		cursorcolumn = true,
@@ -124,5 +124,8 @@ local function load_options()
 		vim.api.nvim_set_option_value(name, value, {})
 	end
 end
+
+-- Newtrw liststyle: https://medium.com/usevim/the-netrw-style-options-3ebe91d42456
+vim.g.netrw_liststyle = 3
 
 load_options()

@@ -17,17 +17,14 @@ return function()
 			selection_caret = icons.ui.ChevronRight,
 			scroll_strategy = "limit",
 			results_title = false,
-			layout_strategy = "horizontal",
+			layout_strategy = "flex",
 			path_display = { "absolute" },
 			selection_strategy = "reset",
-			sorting_strategy = "ascending",
 			color_devicons = true,
 			file_ignore_patterns = { ".git/", ".cache", "build/", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip" },
 			layout_config = {
 				horizontal = {
-					prompt_position = "top",
 					preview_width = 0.55,
-					results_width = 0.8,
 				},
 				vertical = {
 					mirror = false,
@@ -44,13 +41,6 @@ return function()
 			buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
 		},
 		extensions = {
-			aerial = {
-				show_lines = false,
-				show_nesting = {
-					["_"] = false, -- This key will be the default
-					lua = true, -- You can set the option for specific filetypes
-				},
-			},
 			fzf = {
 				fuzzy = false,
 				override_generic_sorter = true,
@@ -97,6 +87,5 @@ return function()
 	require("telescope").load_extension("undo")
 	require("telescope").load_extension("zoxide")
 	require("telescope").load_extension("persisted")
-	require("telescope").load_extension("aerial")
 	require("telescope").load_extension("advanced_git_search")
 end
